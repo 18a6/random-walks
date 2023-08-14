@@ -66,3 +66,26 @@ class Field(object):
             raise ValueError('Drunk not in field')
         xDist, yDist = drunk.takeStep()
         self.drunks[drunk] = self.drunks[drunk].move(xDist, yDist)
+
+
+def walk(f, d, numSteps):
+    """assumes f a Field, d a D a Drunk in f, and numSteps as int >= 0.
+    Moves d numSteps times; returns the distance between the final location and the location at the start of the walk.
+    """
+    start = f.getLoc(d)
+    for s in range(numSteps):
+        f.moveDrunk(d)
+    return start.distFrom(f.getLoc(d))
+
+def simWalks(numSteps, numTrials, dClass)
+    """assumes numSteps an int >= 0, numTrials an int > 0, dClass a subclass of Drunk.
+    Simulates numTrial walks of numSteps steps each. Returns a list of final distances for each trial.
+    """
+    Homer = dClass()
+    origin = Location(0, 0)
+    distances = []
+    for t in range(numTrials):
+        f = Field()
+        f.addDrunk(Homer, origin)
+        distances.append(round(walk(f, Homer, numSteps), 1)) 
+    return distances
