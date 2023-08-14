@@ -8,8 +8,8 @@ class Location(object):
 
     def move(self, deltaX, deltaY):
         """deltaX and deltaY are floats"""
-        return Location(object.x + deltaX,
-                        object.y + deltaY)
+        return Location(self.x + deltaX,
+                        self.y + deltaY)
     
     def getX(self):
         return self.x
@@ -56,7 +56,7 @@ class Field(object):
         else:
             self.drunks[drunk] = loc
 
-    def getDrunk(self, drunk):
+    def getLoc(self, drunk):
         if drunk not in self.drunks:
             raise ValueError('Drunk not in field')
         return self.drunks[drunk]
@@ -77,7 +77,7 @@ def walk(f, d, numSteps):
         f.moveDrunk(d)
     return start.distFrom(f.getLoc(d))
 
-def simWalks(numSteps, numTrials, dClass)
+def simWalks(numSteps, numTrials, dClass):
     """assumes numSteps an int >= 0, numTrials an int > 0, dClass a subclass of Drunk.
     Simulates numTrial walks of numSteps steps each. Returns a list of final distances for each trial.
     """
@@ -89,3 +89,19 @@ def simWalks(numSteps, numTrials, dClass)
         f.addDrunk(Homer, origin)
         distances.append(round(walk(f, Homer, numSteps), 1)) 
     return distances
+
+def drunkTest(walkLengths, numTrials, dClass):
+    """assumes walkLengths a sequence of ints >= 0
+    numTrials an int > 0,
+    dClass a subclass of Drunk
+    for each number of steps in WalkLengths, runs simWalks with numTrials walks and prints results
+    """
+    for numSteps in walkLengths:
+        distances = simWalks(numSteps, numTrials, dClass)
+        print(dClass.__name__, 'random walk of', numSteps, 'steps.')
+        print('Mean =',
+              round(sum(distances) / len(distances), 4))
+        print('Max:', max(distances),
+              'Min:', min(distances))
+        
+drunkTest((1, 2, 3, 4), 10, UsualDrunk)
