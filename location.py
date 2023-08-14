@@ -104,4 +104,4 @@ def drunkTest(walkLengths, numTrials, dClass):
         print('Max:', max(distances),
               'Min:', min(distances))
         
-drunkTest((1, 2, 3, 4), 10, UsualDrunk)
+drunkTest((0, 1, 2), 1000, UsualDrunk) #sanity check
