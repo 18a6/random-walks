@@ -15,6 +15,7 @@ class Walker():
 
 class Plain():
     def __init__(self, width, height):
+        """width and height are int > 0, width and heigth of the plain"""
         self.width = width
         self.height = height
  
@@ -22,12 +23,13 @@ class Plain():
         point_radius = 1
         canvas.create_oval(x - point_radius, y - point_radius, x + point_radius, y + point_radius, fill="black")
 
-    def update_walker_position(self, canvas, walker):
+    def update_walker_position(self, canvas, walker, pace):
         x, y = walker.walk()
         self.draw_point(canvas, x, y)
-        canvas.after(1, self.update_walker_position, canvas, walker)
+        canvas.after(pace, self.update_walker_position, canvas, walker, pace)
 
-    def simulate(self, max_walk_length):
+    def simulate(self, max_walk_length, pace):
+        """max_walk_length is int, speed is int > 0"""
         root = Tk()
         half_width, half_height = self.width, self.height
         canvas = Canvas(root, width=half_width*2, height=half_height*2)
@@ -35,8 +37,9 @@ class Plain():
 
         walker = Walker(half_width, half_height, max_walk_length)
         self.draw_point(canvas, half_width, half_height)
-        self.update_walker_position(canvas, walker)
+        self.update_walker_position(canvas, walker, pace)
+
         root.mainloop()
 
 plain = Plain(500, 500)
-plain.simulate(5)
+plain.simulate(5, 1)
